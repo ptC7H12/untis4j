@@ -22,6 +22,8 @@ import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Class to control the untis4j API
@@ -126,7 +128,9 @@ public class Session {
         if (!server.startsWith("http://") && !server.startsWith("https://")) {
             server = "https://" + server;
         }
-        Infos infos = RequestManager.generateUserInfosAndLogin(username, password, server, schoolName, userAgent);
+        String encodedSchoolName = URLEncoder.encode(schoolName, StandardCharsets.UTF_8);
+
+        Infos infos = RequestManager.generateUserInfosAndLogin(username, password, server, encodedSchoolName, userAgent);
 
         RequestManager requestManager = new RequestManager(infos, useCache);
 
